@@ -32,6 +32,22 @@ public class UserService {
             throw new DuplicateMemberException("이미 가입되어 있는 유저입니다.");
         }
 
+        if (userRepository.findByEmail(userDto.getEmail()).isPresent()){
+            try {
+                throw new Exception("이미 존재하는 이메일입니다.");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (!userDto.getPassword().equals(userDto.getCheckPassword())){
+            try {
+                throw new Exception("비밀번호가 일치하지 않습니다.");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         // 사용자 권한 설정
         Authority authority = Authority.builder()
                 .authorityName("ROLE_USER")
@@ -41,7 +57,7 @@ public class UserService {
         User user = User.builder()
                 .username(userDto.getUsername())
                 .password(passwordEncoder.encode(userDto.getPassword()))  // 비밀번호 암호화
-                .nickname(userDto.getNickname())
+                .email(userDto.getEmail())
                 .authorities(Collections.singleton(authority))  // 권한 설정
                 .activated(true)  // 활성화 상태로 설정
                 .build();

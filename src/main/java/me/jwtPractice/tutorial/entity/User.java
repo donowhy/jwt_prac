@@ -7,7 +7,6 @@ import java.util.Set;
 @Entity
 @Table(name = "`user`")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,8 +23,8 @@ public class User {
    @Column(name = "password", length = 100)
    private String password;
 
-   @Column(name = "nickname", length = 50)
-   private String nickname;
+   @Column(name = "email", length = 50)
+   private String email;
 
    @Column(name = "activated")
    private boolean activated;

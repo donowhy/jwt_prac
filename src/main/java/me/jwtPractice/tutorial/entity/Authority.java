@@ -6,9 +6,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "authority")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
